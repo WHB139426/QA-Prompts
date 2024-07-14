@@ -4,25 +4,24 @@
 
 ## Install
 
-1. Clone this repository and navigate to LLaVA folder
+1. Clone this repository and navigate to QA-Prompts folder
 ```bash
-git clone https://github.com/haotian-liu/LLaVA.git
-cd LLaVA
+git clone https://github.com/WHB139426/QA-Prompts.git
+cd QA-Prompts
 ```
 
 2. Install Package
 ```Shell
-conda create -n llava python=3.10 -y
-conda activate llava
-pip install --upgrade pip  # enable PEP 660 support
-pip install -e .
+conda create -n qaprompts python=3.9.16
+conda activate qaprompts
+pip install -r requirements.txt
 ```
 
 ## Datasets
 
-We prepare the annotations of A-OKVQA in `./annotations`. You can also download it from https://allenai.org/project/a-okvqa/home
+We prepare the annotations of [[A-OKVQA](https://allenai.org/project/a-okvqa/home)] in `./annotations`. You can directly download the annotation files from [[🤗HF](https://huggingface.co/WHB139426/QAprompts/tree/main)]
 
-The images can be downloaded from https://cocodataset.org/#download, and you should organize the data as follows,
+The images can be downloaded from [[COCO2017](https://cocodataset.org/#download)], and you should organize the data as follows,
 
 ```
 ├── coco2017
@@ -31,6 +30,9 @@ The images can be downloaded from https://cocodataset.org/#download, and you sho
 │   └── test2017
 ├── QA-Prompts
 │   └── annotations
+│     └── aokvqa_v1p0_train.json
+│     └── sub_qa.json
+│     └── ...
 │   └── datasets
 │   └── models
 │   └──...
