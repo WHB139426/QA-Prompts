@@ -106,7 +106,7 @@ def eval(args, val_loader, model):
             }
         generate_kwargs = {
             "do_sample": True,
-            "num_beams": 1, 
+            "num_beams": 5, 
             "min_length": 1,
             "num_return_sequences": 1,
             "max_new_tokens": 10,
