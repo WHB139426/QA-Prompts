@@ -23,7 +23,7 @@ def parse_args():
     parser.add_argument('--word_size', default=8, help="n_gpus")
     parser.add_argument('--bs', type=int, default=1)
     parser.add_argument('--eval_bs', type=int, default=1) 
-    parser.add_argument('--epoch', type=int, default=50)
+    parser.add_argument('--epoch', type=int, default=10)
     parser.add_argument('--lr', type=float, default=2e-5)
     parser.add_argument('--eval_step', type=int, default=4, help="eval every 1/eval_step epoch")
     parser.add_argument('--dataset', type=str, default='aokvqa', choices=['aokvqa'])
@@ -198,7 +198,7 @@ def train(args, train_dataset, val_dataset, model):
             # torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=20, norm_type=2)#使用第二种裁剪方式。
 
             scaler.step(optimizer)
-            scaler.update()  #准备着，看是否要增大scaler
+            scaler.update()
             optimizer.zero_grad()
 
         # 对不同进程上的评价指标进行平均
