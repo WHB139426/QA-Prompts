@@ -3,18 +3,15 @@ import torch
 import os
 from tqdm import tqdm
 import argparse
-from torch import cuda
 import time
 from utils import *
 import torch.distributed as dist
 from torch.cuda.amp import autocast as autocast
-import pickle
 import random
-import json
 from torch.backends import cudnn
 from utils.utils import *
 
-# CUDA_VISIBLE_DEVICES=4,5,6,7 python -m torch.distributed.launch --nproc_per_node=4 --word_size=4 --master_port=1111 finetune_ans.py
+# CUDA_VISIBLE_DEVICES=4,5,6,7 python -m torch.distributed.launch --nproc_per_node=4 --master_port=1111 finetune_ans.py
 
 def parse_args():
     parser = argparse.ArgumentParser()
