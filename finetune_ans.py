@@ -11,8 +11,8 @@ import random
 from torch.backends import cudnn
 from utils.utils import *
 
-# CUDA_VISIBLE_DEVICES=4,5,6,7 nohup python -m torch.distributed.launch --nproc_per_node=4 --master_port=1111 finetune_ans.py > finetune_ans.out 2>&1 &
-# CUDA_VISIBLE_DEVICES=4,5,6,7 python -m torch.distributed.launch --nproc_per_node=4 --master_port=1111 finetune_ans.py
+# CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 nohup python -m torch.distributed.launch --nproc_per_node=8 --master_port=1111 finetune_ans.py > finetune_ans.out 2>&1 &
+# CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python -m torch.distributed.launch --nproc_per_node=8 --master_port=1111 finetune_ans.py
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -21,8 +21,8 @@ def parse_args():
     parser.add_argument('--local_rank', default=-1, type=int, help='node rank for distributed training')
 
     parser.add_argument('--coco_path', type=str, default="../coco2017")
-    parser.add_argument('--world_size', default=4, help="n_gpus")
-    parser.add_argument('--bs', type=int, default=4)
+    parser.add_argument('--world_size', default=8, help="n_gpus")
+    parser.add_argument('--bs', type=int, default=1)
     parser.add_argument('--eval_bs', type=int, default=1) 
     parser.add_argument('--epoch', type=int, default=10)
     parser.add_argument('--lr', type=float, default=1e-5)

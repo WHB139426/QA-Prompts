@@ -39,13 +39,13 @@ The images can be downloaded from [[COCO2017](https://cocodataset.org/#download)
 │   └── models
 │   └──...
 ```
-You should also modify the parameter `coco_path` of argparse in `finetune_ans.py`/`evaluation.py` according to directory of your COCO images.
+You should also modify the parameter `coco_path` of argparse in `finetune_ans.py`/`evaluation.py` according to the directory of your COCO images.
 
 ## Pretrained Weights of InstructBLIP
 
 You can prepare the pretrained weights of InstructBLIP-Vicuna-7B according to [[InstructBLIP](https://github.com/salesforce/LAVIS/tree/main/projects/instructblip)].
 
-Since we have changed the structure of the code of the model, we recommend you download the pretrained weights of EVA-CLIP, Vicuna-7b-v1.1 and QFormer directly in [[🤗HF](https://huggingface.co/WHB139426/QAprompts/tree/main)]. The pretrained weights should be organize as follows,
+Since we have changed the structure of the code of the model, we RECOMMEND you download the pretrained weights of EVA-CLIP, Vicuna-7b-v1.1 and QFormer directly in [[🤗HF](https://huggingface.co/WHB139426/QAprompts/tree/main)]. The pretrained weights should be organized as follows,
 
 ```
 ├── QA-Prompts
