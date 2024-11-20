@@ -45,7 +45,7 @@ You should also modify the parameter `coco_path` of argparse in `finetune_ans.py
 
 You can prepare the pretrained weights of InstructBLIP-Vicuna-7B according to [[InstructBLIP](https://github.com/salesforce/LAVIS/tree/main/projects/instructblip)].
 
-Since we have changed the structure of the code of the model, we RECOMMEND you download the pretrained weights of EVA-CLIP, Vicuna-7b-v1.1 and QFormer directly in [[🤗HF](https://huggingface.co/WHB139426/QAprompts/tree/main)]. The pretrained weights should be organized as follows,
+Since we have changed the structure of the code of the model, we RECOMMEND you download the pretrained weights of EVA-CLIP, Vicuna-7b-v1.1 and QFormer directly in [[🤗HF](https://huggingface.co/WHB139426/QAprompts/tree/main)]. The pretrained weights should be downloaded into the sub folder `./experiments` and organized as follows,
 
 ```
 ├── QA-Prompts
@@ -59,7 +59,7 @@ Since we have changed the structure of the code of the model, we RECOMMEND you d
 
 ## Evaluation
 
-Download the trained checkpoints `vicuna_1_0.6969.pth` from [[🤗HF](https://huggingface.co/WHB139426/QAprompts/tree/main)] (should be stored in `./experiments`), and then run
+Download the trained checkpoints `vicuna_1_0.6969.pth` from [[🤗HF](https://huggingface.co/WHB139426/QAprompts/tree/main)] (should be downloaded into the sub folder `./experiments`), and then run the following script to reproduce the results.
 
 ```Shell
 python evaluation.py
