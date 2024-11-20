@@ -1,4 +1,5 @@
 update.sh
+experiments/*
 
 # 忽略所有 __pycache__ 目录
 */__pycache__/
