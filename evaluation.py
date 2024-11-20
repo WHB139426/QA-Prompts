@@ -12,7 +12,7 @@ from models.blip2_vicuna_instruct import Blip2VicunaInstruct
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--ckpt_path', type=str, default='experiments/vicuna_1_0.6969.pth')
-parser.add_argument('--coco_path', type=str, default="/home/haibo/data/coco2017")
+parser.add_argument('--coco_path', type=str, default="../coco2017")
 parser.add_argument('--device', type=str, default='cuda:0')
 parser.add_argument('--dataset', type=str, default='aokvqa')
 parser.add_argument('--use_qaprompt', type=bool, default=True)
