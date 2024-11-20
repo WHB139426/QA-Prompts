@@ -16,7 +16,7 @@ parser.add_argument('--coco_path', type=str, default="../coco2017")
 parser.add_argument('--device', type=str, default='cuda:0')
 parser.add_argument('--dataset', type=str, default='aokvqa')
 parser.add_argument('--use_qaprompt', type=bool, default=True)
-parser.add_argument('--eval_bs', type=int, default=10)
+parser.add_argument('--eval_bs', type=int, default=1)
 parser.add_argument('--model', type=str, default='instruct_blip', choices=['instruct_blip'])
 args = parser.parse_args()
 
