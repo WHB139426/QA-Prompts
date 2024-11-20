@@ -256,13 +256,14 @@ class Blip2VicunaInstruct(nn.Module):
         output_text = [text.strip().replace('<s> ','') for text in output_text]
 
         return output_text
-    
+
+# from datasets.aokvqa_dataset import AOKVQADataset
+# from torch.utils.data import DataLoader
+# dataset = AOKVQADataset(img_path = "/home/haibo/data/coco2017/train2017")
+# train_loader = DataLoader(dataset, batch_size=2, shuffle=False, drop_last=False, num_workers=16)
+
 # model = Blip2VicunaInstruct(dtype=torch.float32)
 # print(get_parameter_number(model))
-# from datasets.aokvqa_dataset import AOKVQADataset
-# from torch.utils.data import Dataset, DataLoader
-# dataset = AOKVQADataset()
-# train_loader = DataLoader(dataset, batch_size=2, shuffle=False, drop_last=False, num_workers=16)
 # optimizer = torch.optim.AdamW(filter(lambda p : p.requires_grad, model.parameters()), lr = 2e-5, betas=(0.9, 0.999), weight_decay=0.02)
 # for step, data in enumerate(train_loader):
 #     pixel_values = data['pixel_values']

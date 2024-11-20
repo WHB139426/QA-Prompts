@@ -1,16 +1,7 @@
 from torch.utils.data import Dataset
-import random
-import numpy as np
-import torch
-from tqdm import tqdm
-from PIL import Image
-import pickle
 import sys
 import os
-import requests
-from PIL import Image
 from collections import Counter
-from io import BytesIO
 import json
 sys.path.append(os.path.abspath(os.path.join(__file__, "..", "..")))
 from utils.utils import *
@@ -153,10 +144,10 @@ class AOKVQADataset(Dataset):
             }
         
      
-    
-# train_dataset = AOKVQADataset()
-# val_dataset = AOKVQADataset()
 
+# import random
+# train_dataset = AOKVQADataset(anno_path = "annotations/aokvqa_v1p0_train.json", img_path="/home/haibo/data/coco2017/train2017")
+# val_dataset = AOKVQADataset(anno_path = "annotations/aokvqa_v1p0_val.json", img_path="/home/haibo/data/coco2017/val2017")
 # for i in range(10):
 #     entry = random.choice(train_dataset)
 #     print(entry['question_ids'], entry['image_ids'])
@@ -168,28 +159,4 @@ class AOKVQADataset(Dataset):
 #     print("mc_answer_texts: ",    entry['mc_answer_texts'])
 #     print("sub_qas: ",              entry['sub_qas'])
 #     print()
-
-# data_loader = torch.utils.data.DataLoader(val_dataset, batch_size=10, pin_memory=True, shuffle=False, drop_last=True, num_workers=8)
-# for step, data in enumerate(data_loader):
-#     pixel_values = data["pixel_values"]
-#     sub_qas = data["sub_qas"]
-#     questions = data['questions']
-#     open_answer_texts = data['open_answer_texts']
-
-#     subqa_texts_input = []
-#     for j in range(pixel_values.shape[0]):
-#         subqa_texts_input.append([sub_qas[i][j] for i in range(len(sub_qas))])
-#     concat_subqa_texts = []
-#     sep = '\n'
-#     for qa_list in subqa_texts_input:
-#         txt = ''
-#         for qa in qa_list:
-#             txt += qa + sep
-#         concat_subqa_texts.append(txt)
-    
-#     for i in range(pixel_values.shape[0]):
-#         print(questions[i])
-#         print(open_answer_texts[i])
-#         print(concat_subqa_texts[i])
-#         print()
-#     break
+# print(len(train_dataset), len(val_dataset))

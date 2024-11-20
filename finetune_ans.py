@@ -14,13 +14,16 @@ import json
 from torch.backends import cudnn
 from utils.utils import *
 
+# CUDA_VISIBLE_DEVICES=4,5,6,7 python -m torch.distributed.launch --nproc_per_node=4 --word_size=4 --master_port=1111 finetune_ans.py
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--experiment_path', type=str, default='experiments')
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--local_rank', default=-1, type=int, help='node rank for distributed training')
 
-    parser.add_argument('--word_size', default=8, help="n_gpus")
+    parser.add_argument('--coco_path', type=str, default="/home/haibo/data/coco2017")
+    parser.add_argument('--word_size', default=4, help="n_gpus")
     parser.add_argument('--bs', type=int, default=1)
     parser.add_argument('--eval_bs', type=int, default=1) 
     parser.add_argument('--epoch', type=int, default=10)
@@ -221,8 +224,8 @@ if __name__ == '__main__':
 
     from datasets.aokvqa_dataset import AOKVQADataset
     if args.dataset == 'aokvqa':
-        train_dataset = AOKVQADataset(anno_path = "annotations/aokvqa_v1p0_train.json", subqa_path = 'annotations/sub_questions.json', img_path = "../coco2017/train2017")
-        val_dataset = AOKVQADataset(anno_path = "annotations/aokvqa_v1p0_val.json", subqa_path = 'annotations/sub_questions.json', img_path = "../coco2017/val2017")
+        train_dataset = AOKVQADataset(anno_path = "annotations/aokvqa_v1p0_train.json", subqa_path = 'annotations/sub_questions.json', img_path = os.path.join(args.coco_path, 'train2017'))
+        val_dataset = AOKVQADataset(anno_path = "annotations/aokvqa_v1p0_val.json", subqa_path = 'annotations/sub_questions.json', img_path = os.path.join(args.coco_path, 'val2017'))
 
     if args.model == 'instruct_blip':
         from models.blip2_vicuna_instruct import Blip2VicunaInstruct

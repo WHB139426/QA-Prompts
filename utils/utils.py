@@ -1,11 +1,8 @@
-import torch
-from transformers import AutoConfig, StoppingCriteria
 import random
 import re
 import requests
 from PIL import Image
 from io import BytesIO
-from rouge import Rouge
 import json
 import pickle
 from torchvision.transforms import Normalize, Compose, InterpolationMode, ToTensor, Resize, CenterCrop
@@ -136,25 +133,6 @@ def compute_vqa_score(bs, preds, direct_answers_texts):
         freq = direct_answers_list.count(pred)
         score += min(freq/3, 1)
     return score/bs
-
-#######################
-# Rouge-L
-#######################
-def rouge_score(str1, str2):
-    rouge = Rouge(metrics=["rouge-l"])
-    scores = rouge.get_scores(str1, str2, avg=True)
-    rouge_l = scores['rouge-l']['f']
-    return rouge_l
-
-def compute_rouge(bs, labels, preds):
-    rouge = 0
-    for i in range(bs):
-        label = labels[i]
-        pred = preds[i]
-        if len(pred) == 0:
-            pred = 'N/A.'
-        rouge += rouge_score(pred, label)
-    return rouge/bs
 
 def tagtxt_to_list(tagtxt):
     word_list = tagtxt.split(" | ")

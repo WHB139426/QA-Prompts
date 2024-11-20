@@ -4,7 +4,6 @@ from einops import rearrange, repeat
 import sys
 import os
 from transformers import BertModel, RobertaModel, AutoConfig, AutoTokenizer, DebertaV2Model
-from transformers.models.perceiver.modeling_perceiver import PerceiverLayer
 sys.path.append(os.path.abspath(os.path.join(__file__, "..", "..")))
 from utils.utils import *
 
