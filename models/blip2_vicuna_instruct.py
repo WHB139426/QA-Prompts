@@ -257,12 +257,14 @@ class Blip2VicunaInstruct(nn.Module):
 
         return output_text
 
+
 # from datasets.aokvqa_dataset import AOKVQADataset
 # from torch.utils.data import DataLoader
 # dataset = AOKVQADataset(img_path = "/home/haibo/data/coco2017/train2017")
 # train_loader = DataLoader(dataset, batch_size=2, shuffle=False, drop_last=False, num_workers=16)
 
-# model = Blip2VicunaInstruct(dtype=torch.float32)
+# device = 'cuda:4'
+# model = Blip2VicunaInstruct(dtype=torch.float16).to(device)
 # print(get_parameter_number(model))
 # optimizer = torch.optim.AdamW(filter(lambda p : p.requires_grad, model.parameters()), lr = 2e-5, betas=(0.9, 0.999), weight_decay=0.02)
 # for step, data in enumerate(train_loader):
@@ -272,12 +274,13 @@ class Blip2VicunaInstruct(nn.Module):
 #             "text_output": data['open_answer_texts'],
 #             "questions": data['questions'],
 #             "qaprompts": data['questions'],
-#             "pixel_values": pixel_values,
+#             "pixel_values": pixel_values.to(device),
 #         }
     
 #     optimizer.zero_grad()
 #     model.train()
-#     outputs = model(samples)
+#     with torch.cuda.amp.autocast(enabled=True, dtype=model.dtype): # 前后开启autocast
+#         outputs = model(samples)
 #     loss = outputs['loss']
 #     loss.backward()
 #     optimizer.step()

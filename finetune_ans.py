@@ -11,6 +11,7 @@ import random
 from torch.backends import cudnn
 from utils.utils import *
 
+# CUDA_VISIBLE_DEVICES=4,5,6,7 nohup python -m torch.distributed.launch --nproc_per_node=4 --master_port=1111 finetune_ans.py > finetune_ans.out 2>&1 &
 # CUDA_VISIBLE_DEVICES=4,5,6,7 python -m torch.distributed.launch --nproc_per_node=4 --master_port=1111 finetune_ans.py
 
 def parse_args():
@@ -19,12 +20,12 @@ def parse_args():
     parser.add_argument('--seed', type=int, default=42)
     parser.add_argument('--local_rank', default=-1, type=int, help='node rank for distributed training')
 
-    parser.add_argument('--coco_path', type=str, default="/home/haibo/data/coco2017")
-    parser.add_argument('--word_size', default=4, help="n_gpus")
-    parser.add_argument('--bs', type=int, default=1)
+    parser.add_argument('--coco_path', type=str, default="../coco2017")
+    parser.add_argument('--world_size', default=4, help="n_gpus")
+    parser.add_argument('--bs', type=int, default=4)
     parser.add_argument('--eval_bs', type=int, default=1) 
     parser.add_argument('--epoch', type=int, default=10)
-    parser.add_argument('--lr', type=float, default=2e-5)
+    parser.add_argument('--lr', type=float, default=1e-5)
     parser.add_argument('--eval_step', type=int, default=4, help="eval every 1/eval_step epoch")
     parser.add_argument('--dataset', type=str, default='aokvqa', choices=['aokvqa'])
     parser.add_argument('--use_qaprompt', type=bool, default=True)
@@ -146,14 +147,14 @@ def eval(args, val_loader, model):
 def train(args, train_dataset, val_dataset, model):
 
     train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.bs, sampler=train_sampler, pin_memory=True, shuffle=False, drop_last=True, num_workers=4*args.word_size)
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.bs, sampler=train_sampler, pin_memory=True, shuffle=False, drop_last=True, num_workers=4*args.world_size)
     val_sampler = torch.utils.data.distributed.DistributedSampler(val_dataset)
-    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=args.eval_bs, sampler=val_sampler, pin_memory=True, shuffle=False, drop_last=True, num_workers=4*args.word_size)
+    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=args.eval_bs, sampler=val_sampler, pin_memory=True, shuffle=False, drop_last=True, num_workers=4*args.world_size)
 
     optimizer = torch.optim.AdamW(filter(lambda p : p.requires_grad, model.parameters()), lr = args.lr, betas=(0.9, 0.98), eps=1e-6, weight_decay=0)
 
     max_score = 0
-    save_socre = 0.75
+    save_socre = 0.68
 
     scaler = torch.cuda.amp.GradScaler() #训练前实例化一个GradScaler对象
 
@@ -232,7 +233,7 @@ if __name__ == '__main__':
             )
 
     device = torch.device('cuda', args.local_rank)
-    dist.init_process_group(backend='nccl',rank=args.local_rank, world_size=args.word_size)
+    dist.init_process_group(backend='nccl',rank=args.local_rank, world_size=args.world_size)
     init_seeds(args.seed + torch.distributed.get_rank())
     torch.cuda.set_device(device)
     model = torch.nn.parallel.DistributedDataParallel(model.cuda(args.local_rank),
@@ -241,6 +242,6 @@ if __name__ == '__main__':
                                                         ) # ,find_unused_parameters=True # broadcast_buffers=False
     if dist.get_rank() == 0:
         print(get_parameter_number(model))
-        print("dataset: {}  train_num: {}  eval_num: {}  epochs: {}  batch_size_per_gpu: {}  n_gpu: {}  learning_rate: {}".format(args.dataset, len(train_dataset), len(val_dataset), args.epoch, args.bs, args.word_size, args.lr))
+        print("dataset: {}  train_num: {}  eval_num: {}  epochs: {}  batch_size_per_gpu: {}  n_gpu: {}  learning_rate: {}".format(args.dataset, len(train_dataset), len(val_dataset), args.epoch, args.bs, args.world_size, args.lr))
 
     train(args, train_dataset, val_dataset, model)
