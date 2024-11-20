@@ -4,5 +4,5 @@ Pillow==11.0.0
 Requests==2.32.3
 torch==1.13.1
 torchvision==0.14.1
-tqdm==4.66.4
-transformers==4.46.0
+tqdm==4.67.0
+transformers==4.37.2
